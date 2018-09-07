@@ -1,5 +1,5 @@
-const Partie = require('./Partie');
-const Joueur = require('./Joueur');
+const Partie = require('./modeles/partie');
+const Joueur = require('./modeles/joueur');
 
 const modificateurVitesse = Math.max(process.argv[2], 1);
 

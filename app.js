@@ -2,8 +2,8 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const partiesRouter = require('./routes/partie');
+const indexRouter = require('./src/routes/index');
+const partiesRouter = require('./src/routes/partie');
 
 const app = express();
 
@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/parties', partiesRouter);
 
-const generateur = require('./Generateur');
+const generateur = require('./src/generateur');
 generateur.demarrer();
 
 module.exports = app;

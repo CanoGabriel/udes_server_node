@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Partie = require('../Partie.js');
-const Joueur = require('../Joueur.js');
+const Partie = require('../modeles/partie.js');
+const Joueur = require('../modeles/joueur.js');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {

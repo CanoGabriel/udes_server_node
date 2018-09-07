@@ -1,4 +1,4 @@
-const Pointage = require('./Pointage.js');
+const Pointage = require('./pointage.js');
 
 class Partie {
   constructor (joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut) {

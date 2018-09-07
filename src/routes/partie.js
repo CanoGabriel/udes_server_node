@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const gen = require('../Generateur');
+const gen = require('../generateur');
 
 /* GET parties listing. */
 router.get('/', function (req, res, next) {
