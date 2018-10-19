@@ -1,4 +1,5 @@
 const Pointage = require('./pointage.js');
+const Joueur = require('./joueur');
 
 class Partie {
   constructor (joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut) {
@@ -68,5 +69,29 @@ class Partie {
       'constestation': this.constestation
     };
   }
+
+  static getHeureDebut(){
+    var heure = Math.floor(Math.random() * 24);
+    var minute = Math.floor(Math.random() * 12) * 5;
+    return ''+heure+'h'+minute;
+  }
+
+  static getPartie(){
+    var terrain = Math.floor(Math.random() * 10);
+    var tournoi = this.TOURNOI[Math.floor(Math.random() * this.TOURNOI.length)];
+    var heureDebut = this.getHeureDebut();
+    var tickDebut = Math.floor(Math.random() * 200);
+    return new Partie(Joueur.getJoueur(), Joueur.getJoueur(), terrain, tournoi, heureDebut, tickDebut)
+  }
+
 }
-module.exports = Partie;
+
+
+
+Partie.TOURNOI = [
+  "Aircel Chennai Open", "Qatar ExxonMobil Open", "Apia International Sydney",
+  "ASB Classic", "Australian Open", "Open Sud de France", "Ecuador Open",
+  "Garanti Koza Sofia Open", "ABN AMRO World Tennis Tournament", "Argentina Open",
+  "Memphis Open"
+];
+ module.exports = Partie;
