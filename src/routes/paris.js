@@ -16,6 +16,16 @@ function searchByPartieId(listeParis, id){
   }
   return liste;
 }
+
+function partieExist(listePartie, id){
+  for (i = 0; i < listePartie.length; i++) {
+    console.log(listePartie[i].ident + ' | '+id);
+    if(listePartie[i].ident == ''+id){
+      return true;
+    }
+  }
+  return false;
+}
 /* GET parties listing. */
 router.get('/', function (req, res, next) {
   res.send(gen.liste_paris);
@@ -52,7 +62,7 @@ router.post('/',function(req,res,next){
   req.socket.remoteAddress ||
   req.connection.socket.remoteAddress).split(",")[0];
   var paris = new Paris(gen.compteur_id++,ip,montant,id_match,vainqueur);
-  if(paris.id_match >= gen.liste_partie.length){
+  if(!partieExist(gen.liste_partie,paris.id_match)){
     res.status(500).send('Ce match n\'existe pas');
   }
   else{
