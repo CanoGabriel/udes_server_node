@@ -84,6 +84,10 @@ class Partie {
     return new Partie(Joueur.getJoueur(), Joueur.getJoueur(), terrain, tournoi, heureDebut, tickDebut)
   }
 
+
+  isPariable(){
+    return (this.pointage.manches[0]+this.pointage.manches[1] < 1);
+  }
 }
 
 
