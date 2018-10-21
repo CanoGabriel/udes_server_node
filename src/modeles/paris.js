@@ -1,7 +1,8 @@
 class Paris {
 
-  constructor (id, montant, id_match,vainqueur){
+  constructor (id,ip, montant, id_match,vainqueur){
     this.id = id;
+    this.ip = ip;
     this.montant = montant;
     this.id_match = id_match;
     this.state = 0;
@@ -12,6 +13,7 @@ class Paris {
   toJSON () {
     return {
       'id': this.id,
+      'ip': this.ip,
       'montant': this.montant,
       'id_match': this.id_match,
       'state': this.state,
@@ -24,7 +26,7 @@ class Paris {
     var montant = Math.floor(Math.random() * 100);
     var id_match = Math.floor(Math.random() * 5);
     var vainqueur = (Math.random() > 0.5)?1:2;
-    return new Paris(id,montant,id_match, vainqueur);
+    return new Paris(id,"::ffff:192.168.0.144",montant,id_match, vainqueur);
   }
 }
 

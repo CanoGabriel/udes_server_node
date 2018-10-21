@@ -62,9 +62,7 @@ function demarrerPartie (partie) {
           liste[i].gain = (0.75 * total)/nb_gagnant;
         }
       }
-      console.log("Gain serveur : " + 0.25 * total);
-      console.log("Total : " + total);
-      console.log("nb_gagnant : " + nb_gagnant);
+      console.log("Gain serveur : " + 0.25 * total + " pour le match d'id " + partie.ident);
       clearInterval(timer);
     }
   }, Math.floor(1000 / modificateurVitesse));
