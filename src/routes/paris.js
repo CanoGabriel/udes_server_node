@@ -19,7 +19,6 @@ function searchByPartieId(listeParis, id){
 
 function partieExist(listePartie, id){
   for (i = 0; i < listePartie.length; i++) {
-    console.log(listePartie[i].ident + ' | '+id);
     if(listePartie[i].ident == ''+id){
       return true;
     }

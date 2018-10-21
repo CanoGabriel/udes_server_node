@@ -44,7 +44,6 @@ function demarrerPartie (partie) {
       var total  = 0;
       var nb_gagnant = 0;
       for (let i = 0; i < listeParis.length; i++) {
-        console.log(i + "(" + partie.ident + ")");
         if(listeParis[i].id_match == partie.ident){
           liste.push(listeParis[i]);
           total += listeParis[i].montant;
