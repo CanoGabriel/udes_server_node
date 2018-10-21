@@ -17,11 +17,11 @@ listePartie.push(Partie.getPartie(compteur_id++));
 listePartie.push(Partie.getPartie(compteur_id++));
 listePartie.push(Partie.getPartie(compteur_id++));
 
-listeParis.push(Paris.getParis());
-listeParis.push(Paris.getParis());
-listeParis.push(Paris.getParis());
-listeParis.push(Paris.getParis());
-listeParis.push(Paris.getParis());
+listeParis.push(Paris.getParis(compteur_id++));
+listeParis.push(Paris.getParis(compteur_id++));
+listeParis.push(Paris.getParis(compteur_id++));
+listeParis.push(Paris.getParis(compteur_id++));
+listeParis.push(Paris.getParis(compteur_id++));
 
 const demarrer = function () {
   let tick = 0;
@@ -74,3 +74,4 @@ module.exports = {};
 module.exports.demarrer = demarrer;
 module.exports.liste_partie = listePartie;
 module.exports.liste_paris = listeParis;
+module.exports.compteur_id = compteur_id;

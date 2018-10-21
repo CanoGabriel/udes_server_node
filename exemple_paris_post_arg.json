@@ -1,0 +1,4 @@
+{"montant":44,"id_match":0,"vainqueur":1}
+
+requete curl de test : 
+curl -H "Accept: application/json" -H "Content-Type:application/json" -X POST --data "{\"montant\":42,\"id_match\":18,\"vainqueur\":2}" "http://localhost:3000/paris"

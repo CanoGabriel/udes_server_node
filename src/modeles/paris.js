@@ -20,17 +20,11 @@ class Paris {
     };
   }
 
-  static getParis(){
-    if(this.id === undefined){
-      this.id = 0
-    }
-    else{
-      this.id++;
-    }
+  static getParis(id){
     var montant = Math.floor(Math.random() * 100);
     var id_match = Math.floor(Math.random() * 5);
     var vainqueur = (Math.random() > 0.5)?1:2;
-    return new Paris(this.id,montant,id_match, vainqueur);
+    return new Paris(id,montant,id_match, vainqueur);
   }
 }
 
