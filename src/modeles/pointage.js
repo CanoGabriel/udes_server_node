@@ -32,6 +32,7 @@ class Pointage {
 
     // si le match est termine, le dire
     if (this.manches[joueur] === 2) {
+      this.vainqueur = joueur;
       this.final = true;
     }
   }
