@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
+const cors= require('cors');
 const gen = require('../generateur');
+const app= express();
 
 function getPartieById(id){
   for (i = 0; i < gen.liste_partie.length; i++) {
@@ -12,12 +13,12 @@ function getPartieById(id){
 }
 
 /* GET parties listing. */
-router.get('/', function (req, res, next) {
+app.get('/',cors({allowedHeaders:['Content-Type','Authorization']}), function (req, res, next) {
   res.send(gen.liste_partie);
 });
 
-router.get('/:id', function (req, res, next) {
+app.get('/:id', function (req, res, next) {
   res.send(getPartieById(req.params.id));
 });
 
-module.exports = router;
+module.exports = app;
