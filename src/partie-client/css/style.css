@@ -1,0 +1,50 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0;
+  border-radius: 0;
+}
+
+.bordure {
+  border: 2px solid black;
+  color: black;
+  margin-bottom: 10px;
+}
+
+.bordure>p {
+  margin-left: 5px;
+  margin-top: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.liste>h3 {
+  text-align: center;
+  font-weight: 600;
+}
+
+.liste>ul,.liste>p {
+  text-align: center;
+}
+
+.liste>.titre {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.liste {
+  margin-bottom: 30px;
+}
+
+.form {
+    border: 1px solid black;
+    display: inline-block;
+    text-align: left;
+}
+
+body {
+    text-align: center;
+}

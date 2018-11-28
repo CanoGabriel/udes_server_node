@@ -3,10 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>TennisParis</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body>
+  <nav class="navbar navbar-inverse" >
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="accueil.html">Paris Tennis</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="accueil.html">Accueil</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a id="refresh-link"><span class="glyphicon glyphicon-repeat"></span> Rafraîchir </a></li>
+      </ul>
+    </div>
+  </nav>
 
-    Achete ma merde!!
+  <form>
+    <div class = "container">
+      <div class="contenu col-xs-12">
+        <div class="bordure col-sm-8 col-sm-offset-2">
+          <p>Match 1</p>
+          <ul class="liste">
+            <h3>Informations Joueurs</h3>
+            <ul class="list-inline">
+              <li class="col-sm-6 col-xs-6 joueur1"></li>
+              <li class="col-sm-6 col-xs-6 joueur2"></li>
+            </ul>
+            <ul class="list-inline">
+              <li class="col-sm-6 col-xs-6" id="age1"></li>
+              <li class="col-sm-6 col-xs-6" id="age1"></li>
+            </ul>
+            <ul class="list-inline">
+              <li class="col-sm-6 col-xs-6" id="rang1"></li>
+              <li class="col-sm-6 col-xs-6" id="rang2"></li>
+            </ul>
+            <ul class="list-inline">
+              <li class="col-sm-6 col-xs-6" id="pays1"></li>
+              <li class="col-sm-6 col-xs-6" id="pays2"></li>
+            </ul>
+            <h3>Evolution Match</h3>
+            <ul class="list-inline titre">
+              <li class="col-sm-6 col-xs-6">Jeu</li>
+              <li class="col-sm-6 col-xs-6">Echange</li>
+            </ul>
+            <ul class="list-inline">
+              <ul class="list-inline col-sm-6 col-xs-6" id="jeu">
+                <li>6-4</li>
+                <li>4-5</li>
+              </ul>
+              <li class="col-sm-6 col-xs-6" id="echange">0-30</li>
+            </ul>
+            <ul class="list-inline titre">
+              <li class="col-sm-6 col-xs-6">Contestation</li>
+              <li class="col-sm-6 col-xs-6">Temps</li>
+            </ul>
+            <ul class="list-inline">
+              <li class="col-sm-6 col-xs-6" id="contestation">3-3</li>
+              <li class="col-sm-6 col-xs-6" id="temps">46'30</li>
+            </ul>
+          </ul>
+        </div>
+      </div>
+      <form class="form">
+        <label>Montant :
+        <input type="number" min="0" id="paris" size="10"></label>
+        <label class="joueur1 radio-inline">
+          <input type="radio" checked="checked" name="radio">
+          joueur1
+        </label>
+        <label class="joueur2 radio-inline">
+          <input type="radio" name="radio">
+          joueur2
+        </label>
+        <button type="button" class="btn btn-default">Parier</button>
+      </form>
+    </div>
+  </form>
     <div class="match">
         <ul>
 
@@ -14,5 +89,7 @@
     </div>
     <script src="https://127.0.0.1:3500/scripts/scripts/jquery-3.3.1.min.js"></script>
     <script src="https://127.0.0.1:3500/scripts/scripts/details.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
 </body>
 </html>
