@@ -1,38 +1,25 @@
 $("document").ready(function(){
     console.log("chargé");
 
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/src/partie-client/cache.js')
-            .then(function(reg) {
-                // registration worked
-                console.log('Registration succeeded. Scope is ' + reg.scope);
-            }).catch(function(error) {
-            // registration failed
-            console.log('Registration failed with ' + error);
-        });
-    }
 
     fetch('https://127.0.0.1:3500/parties'
     )
         .then(function (response){
             return response.json();
         }).then(function (data){
-        affichageMatchs(data);
-        /*caches.open('v1').then(function(cache){
-            cache.put('https://127.0.0.1:3500/parties',data);
-        });*/
-    }).catch((response) => {
-        console.log('Error')
-    });
+            affichageMatchs(data);
+            console.log(data);
+        }).catch((response) => {
+            console.log('Error')
+        });
 
     $("table").on("click","tr",function(e){
-
-        window.location="https://127.0.0.1:3500/client-side/details/0";
+        let id= $(this).attr('data-id');
+        window.location="https://127.0.0.1:3500/client-side/details/"+id;
     });
 
     $("#refresh").on('click',function(){
-        fetch('https://127.0.0.1:3500/parties'
-        )
+        fetch('https://127.0.0.1:3500/parties')
             .then(function (response){
                 return response.json();
             }).then(function (data){
@@ -42,7 +29,18 @@ $("document").ready(function(){
         }).catch((response) => {
             console.log('Error')
         });
-    })
+    });
+    setTimeout(function () {
+
+        fetch('https://127.0.0.1:3500/parties')
+            .then(function (response) {
+                return response.json();
+            }).then(function (data) {
+            $("tbody").children().eq(0).siblings().remove();
+            affichageMatchs(data);
+        });
+    },60000);
+    main();
 });
 
 function affichageMatchs(data){
@@ -57,3 +55,45 @@ function affichageMatchs(data){
         $("#tableOfAllMatchs tbody").append(ligne);
     }
 }
+
+const check = () => {
+    if (!('serviceWorker' in navigator)) {
+        throw new Error('No Service Worker support!')
+    }
+    if (!('PushManager' in window)) {
+        throw new Error('No Push API Support!')
+    }
+}
+
+const registerServiceWorker = async () => {
+    const swRegistration = await navigator.serviceWorker.register('/cache.js'); //notice the file name
+    return swRegistration;
+}
+
+const requestNotificationPermission = async () => {
+    const permission = await window.Notification.requestPermission();
+    // value of permission can be 'granted', 'default', 'denied'
+    // granted: user has accepted the request
+    // default: user has dismissed the notification permission popup by clicking on x
+    // denied: user has denied the request.
+    if(permission !== 'granted'){
+        throw new Error('Permission not granted for Notification');
+    }
+}
+
+const showLocalNotification = (title, body, swRegistration) => {
+    const options = {
+        body,
+        // here you can add more properties like icon, image, vibrate, etc.
+    };
+    swRegistration.showNotification(title, options);
+
+}
+
+const main = async () => {
+    check();
+    const swRegistration = await registerServiceWorker();
+    const permission =  await requestNotificationPermission();
+    //showLocalNotification('This is title', 'this is the message', swRegistration);
+}
+

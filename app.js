@@ -9,6 +9,39 @@ const indexRouter = require('./src/routes/index');
 const partiesRouter = require('./src/routes/partie');
 const parisRouter = require('./src/routes/paris');
 
+
+
+const mongo= require('mongodb');
+const mongoClient= mongo.MongoClient;
+var url="mongodb://localhost:27017/mydb";
+
+/*mongoClient.connect(url, { useNewUrlParser: true },function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("mydb");
+    dbo.collection("subscription").drop(function(err, delOK) {
+        if (err) throw err;
+        if (delOK) console.log("Collection deleted");
+        db.close();
+    });
+});*/
+
+mongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("mydb");
+    dbo.createCollection("subscription", function(err, res) {
+        if (err) throw err;
+        console.log("Collection created!");
+        //db.close();
+    });
+    /*dbo.collection("subscription").deleteMany({},function(err, obj) {
+        if (err) throw err;
+        console.log(obj.result.n + " document(s) deleted");
+        db.close();
+    })*/
+});
+
+
+
 const app = express();
 
 https.createServer({

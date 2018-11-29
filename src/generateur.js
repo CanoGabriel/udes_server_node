@@ -1,6 +1,7 @@
 const Partie = require('./modeles/partie');
 const Joueur = require('./modeles/joueur');
 const Paris = require('./modeles/paris');
+var MongoClient = require('mongodb').MongoClient;;
 
 const modificateurVitesse = Math.max(process.argv[2], 1);
 

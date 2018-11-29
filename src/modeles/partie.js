@@ -1,7 +1,13 @@
 const Pointage = require('./pointage.js');
 const Joueur = require('./joueur');
+var url = "mongodb://localhost:27017/";
+const bdd= require('./notifications');
+
 
 class Partie {
+
+
+
   constructor (joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut, ident) {
     this.joueur1 = joueur1;
     this.joueur2 = joueur2;
@@ -28,14 +34,43 @@ class Partie {
         //cas ou le joueur effectuant une contestation n'est pas pris en compte...
         this.constestation[contestant] = Math.max(0, this.constestation[contestant] - 1);
         console.log('contestation echouee');
+        if(contestant==0)
+        {
+            const j= "La contestation de "+this.joueur1.prenom+" "+this.joueur1.nom+" a echouee"
+            bdd(url,j);
+        }
+        else{
+            const j= "La contestation de "+this.joueur2.prenom+" "+this.joueur2.nom+" a echouee"
+            bdd(url,j);
+        }
+
+
       } else {
         contestationReussi = true;
         console.log('contestation reussie');
+        if(contestant==0)
+        {
+            const j= "La contestation de "+this.joueur1.prenom+" "+this.joueur1.nom+" a reussi"
+            bdd(url,j);
+        }
+        else{
+            const j= "La contestation de "+this.joueur2.prenom+" "+this.joueur2.nom+" a reussi"
+            bdd(url,j);
+        }
       }
     }
 
     if (!contestationReussi) {
-      this.pointage.ajouterPoint(Math.floor(Math.random() * 2));
+      let j= (Math.floor(Math.random() * 2));
+      if(j==0){
+        let name= this.joueur1.prenom+" "+this.joueur1.nom;
+        this.pointage.ajouterPoint(j,name);
+      }
+      else{
+          let name= this.joueur2.prenom+" "+this.joueur2.nom;
+          this.pointage.ajouterPoint(name);
+      }
+
     }
     this.temps_partie += Math.floor(Math.random() * 60); // entre 0 et 60 secondes entre chaque point
     this.vitesse_dernier_service = Math.floor(Math.random() * (250 - 60 + 1)) + 60; // entre 60 et 250 km/h
