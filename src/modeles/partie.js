@@ -1,8 +1,14 @@
 const Pointage = require('./pointage.js');
 const Joueur = require('./joueur');
+var url = "mongodb://localhost:27017/";
+const bdd= require('./notifications');
+
 
 class Partie {
-  constructor (joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut) {
+
+
+
+  constructor (joueur1, joueur2, terrain, tournoi, heureDebut, tickDebut, ident) {
     this.joueur1 = joueur1;
     this.joueur2 = joueur2;
     this.terrain = terrain;
@@ -15,23 +21,56 @@ class Partie {
     this.nombre_coup_dernier_echange = 0;
     this.constestation = [3, 3];
     this.tick_debut = tickDebut;
+    this.nombre_tentative_contestation = [0, 0];
+    this.ident = ident;
   }
 
   jouerTour () {
     let contestationReussi = false;
     if ((Math.random() * 100) < 3) { // 3% de contestation
+      const contestant = Math.floor(Math.random() * 2);
+      this.nombre_tentative_contestation[contestant]++;
       if (!Partie.contester()) {
-        const contestant = Math.floor(Math.random() * 2);
+        //cas ou le joueur effectuant une contestation n'est pas pris en compte...
         this.constestation[contestant] = Math.max(0, this.constestation[contestant] - 1);
         console.log('contestation echouee');
+        if(contestant==0)
+        {
+            const j= "La contestation de "+this.joueur1.prenom+" "+this.joueur1.nom+" a echouee"
+            bdd(url,j);
+        }
+        else{
+            const j= "La contestation de "+this.joueur2.prenom+" "+this.joueur2.nom+" a echouee"
+            bdd(url,j);
+        }
+
+
       } else {
         contestationReussi = true;
         console.log('contestation reussie');
+        if(contestant==0)
+        {
+            const j= "La contestation de "+this.joueur1.prenom+" "+this.joueur1.nom+" a reussi"
+            bdd(url,j);
+        }
+        else{
+            const j= "La contestation de "+this.joueur2.prenom+" "+this.joueur2.nom+" a reussi"
+            bdd(url,j);
+        }
       }
     }
 
     if (!contestationReussi) {
-      this.pointage.ajouterPoint(Math.floor(Math.random() * 2));
+      let j= (Math.floor(Math.random() * 2));
+      if(j==0){
+        let name= this.joueur1.prenom+" "+this.joueur1.nom;
+        this.pointage.ajouterPoint(j,name);
+      }
+      else{
+          let name= this.joueur2.prenom+" "+this.joueur2.nom;
+          this.pointage.ajouterPoint(name);
+      }
+
     }
     this.temps_partie += Math.floor(Math.random() * 60); // entre 0 et 60 secondes entre chaque point
     this.vitesse_dernier_service = Math.floor(Math.random() * (250 - 60 + 1)) + 60; // entre 60 et 250 km/h
@@ -56,6 +95,7 @@ class Partie {
 
   toJSON () {
     return {
+      'id': this.ident,
       'joueur1': this.joueur1,
       'joueur2': this.joueur2,
       'terrain': this.terrain,
@@ -66,7 +106,9 @@ class Partie {
       'serveur': this.joueur_au_service,
       'vitesse_dernier_service': this.vitesse_dernier_service,
       'nombre_coup_dernier_echange': this.nombre_coup_dernier_echange,
-      'constestation': this.constestation
+      'constestation': this.constestation,
+      'nombre_tentative_contestation': this.nombre_tentative_contestation,
+	  'tickDebut': this.tick_debut
     };
   }
 
@@ -76,17 +118,18 @@ class Partie {
     return ''+heure+'h'+minute;
   }
 
-  static getPartie(){
+  static getPartie(ident){
     var terrain = Math.floor(Math.random() * 10);
     var tournoi = this.TOURNOI[Math.floor(Math.random() * this.TOURNOI.length)];
     var heureDebut = this.getHeureDebut();
     var tickDebut = Math.floor(Math.random() * 200);
-    return new Partie(Joueur.getJoueur(), Joueur.getJoueur(), terrain, tournoi, heureDebut, tickDebut)
+    return new Partie(Joueur.getJoueur(), Joueur.getJoueur(), terrain, tournoi, heureDebut, tickDebut,ident)
   }
 
+  isPariable(){
+    return (this.pointage.manches[0]+this.pointage.manches[1] < 1);
+  }
 }
-
-
 
 Partie.TOURNOI = [
   "Aircel Chennai Open", "Qatar ExxonMobil Open", "Apia International Sydney",
@@ -94,4 +137,5 @@ Partie.TOURNOI = [
   "Garanti Koza Sofia Open", "ABN AMRO World Tennis Tournament", "Argentina Open",
   "Memphis Open"
 ];
- module.exports = Partie;
+
+module.exports = Partie;

@@ -1,3 +1,6 @@
+const bdd= require('./notifications');
+var url = "mongodb://localhost:27017/";
+
 class Pointage {
   constructor (parent) {
     this.manches = [0, 0];
@@ -8,7 +11,7 @@ class Pointage {
     this.parent = parent;
   }
 
-  ajouterPoint (joueur) {
+  ajouterPoint (joueur,nom='') {
     const mancheCourante = this.manches.reduce((a, b) => a + b, 0);
 
     // incrementer l'echange
@@ -23,6 +26,8 @@ class Pointage {
 
     // si requis, incrementer la manche
     if (this.jeu[mancheCourante][joueur] === 6) {
+      let mess= nom +" a remporté la manche";
+      bdd(url,mess);
       this.manches[joueur] += 1;
       this.parent.nouvelleManche();
       if (this.manches[joueur] < 2) {
@@ -32,6 +37,7 @@ class Pointage {
 
     // si le match est termine, le dire
     if (this.manches[joueur] === 2) {
+      this.vainqueur = joueur;
       this.final = true;
     }
   }
