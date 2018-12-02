@@ -4,7 +4,7 @@ html {
 }
 
 .navbar {
-  margin-bottom: 0;
+  margin-bottom: 10px;
   border-radius: 0;
 }
 
@@ -47,4 +47,8 @@ html {
 
 body {
     text-align: center;
+}
+
+#refresh{
+  cursor: pointer;
 }

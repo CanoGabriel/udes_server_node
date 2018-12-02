@@ -4,6 +4,7 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const fs =require('fs');
 const https= require('https');
+var engines = require('consolidate');
 
 const indexRouter = require('./src/routes/index');
 const partiesRouter = require('./src/routes/partie');
@@ -61,7 +62,17 @@ app.use('/', indexRouter);
 app.use('/parties', partiesRouter);
 app.use('/paris', parisRouter);
 
+app.set('views', __dirname + '/../partie-client');
+app.engine('html', engines.mustache);
+app.set('view engine', 'html');
+
+/*
+app.get('/',function(req,res){
+    res.render(__dirname+'/src/partie-client/connexion.html');
+})
+*/
 const generateur = require('./src/generateur');
 generateur.demarrer();
+
 
 module.exports = app;

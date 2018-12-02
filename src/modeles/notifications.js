@@ -14,6 +14,8 @@ webpush.setVapidDetails(
     vapidKeys.privateKey
 );
 const sendNotification = (subscription, dataToSend='') => {
+    /*console.log("sub")
+    console.log(subscription)*/
     webpush.sendNotification(subscription, dataToSend).catch(function(err){
         console.log('Error activation', err)
     })

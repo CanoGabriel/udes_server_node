@@ -1,57 +1,73 @@
 $("document").ready(function(){
    console.log("details");
-    let id= $(".match").attr('data-id');
+    let id= $(".container").attr('data-id');
     fetch('https://127.0.0.1:3500/parties/'+id)
         .then(function (response){
             return response.json();
         }).then(function (data){
             affichageMatchs(data);
         }).catch((response) => {
-            console.log('Error')
+            console.log('Error '+response);
         });
 
     $("#refresh").on('click',function(){
-        $("ul").children().remove();
-        let id= $(".match").attr('data-id');
+        let id= $(".container").attr('data-id');
         fetch('https://127.0.0.1:3500/parties/'+id)
             .then(function (response){
                 return response.json();
             }).then(function (data){
-            affichageMatchs(data);
+                affichageMatchs(data);
 
             }).catch((response) => {
                 console.log('Error '+response);
             });
     });
 
-    setTimeout(function () {
+    setInterval(function () {
 
-        let id= $(".match").attr('data-id');
+        let id= $(".container").attr('data-id');
         fetch('https://127.0.0.1:3500/parties/'+id)
             .then(function (response) {
                 return response.json();
             }).then(function (data) {
-                $("ul").children().remove();
                 affichageMatchs(data);
             });
-    },60000);
+    },10000);
 
 });
 
 function affichageMatchs(data) {
     console.log(data);
-    var joueur1= ""+data.joueur1.prenom+" "+data.joueur1.nom+" agé de "+data.joueur1.age+", orginiaire de "+data.joueur1.pays+" au rang "+data.joueur1.rang;
-    var joueur2= ""+data.joueur2.prenom+" "+data.joueur2.nom+" agé de "+data.joueur2.age+", orginiaire de "+data.joueur2.pays+" au rang "+data.joueur2.rang;
-    var score= "echange: "+data.pointage.echange[0]+" - "+ data.pointage.echange[1]+" jeu: "+data.pointage.jeu[0]+" - "+data.pointage.jeu[1]+" manches: "+data.pointage.manches[0]+" - "+data.pointage.manches[1];
-    $("ul").append("<li>"+joueur1+"</li>");
-    $("ul").append("<li>"+joueur2+"</li>");
-    $("ul").append("<li> nombre de coups pendant le dernier échange: "+data.nombre_coup_dernier_echange+"</li>");
-    $("ul").append("<li>tentatives de contestations:"+data.nombre_tentative_contestation[0]+' - '+data.nombre_tentative_contestation[1]+"</li>");
-    $("ul").append("<li>"+score+"</li>");
-    $("ul").append("<li>serveur: "+data.serveur+"</li>");
-    $("ul").append("<li>temps partie: "+data.temps_partie+"</li>");
-    $("ul").append("<li>terrain n°"+data.terrain+"</li>");
-    $("ul").append("<li>tickDebut: "+data.tickDebut+"</li>");
-    $("ul").append("<li>tournoi: "+data.tournoi+"</li>");
-    $("ul").append("<li>vitesse dernier service: "+data.vitesse_dernier_service+"</li>");
+
+    $(".joueur1").text(data.joueur1.prenom+" "+data.joueur1.nom);
+    $(".joueur2").text(data.joueur2.prenom+" "+data.joueur2.nom);
+    $("#age1").text(data.joueur1.age);
+    $("#age2").text(data.joueur2.age);
+    $("#rang1").text(data.joueur1.rang);
+    $("#rang2").text(data.joueur2.rang);
+    $("#echange").text(data.pointage.echange[0]+" - "+data.pointage.echange[1]);
+    $("#constestation").text(data.constestation[0]+" - "+data.constestation[1]);
+    var t= data.temps_partie;
+    var s = Math.floor(t / 1000) % 60;
+    var m = Math.floor(t / 60000) % 60;
+    var chaine = m+"'"+s;
+    $("#temps").text(Math.floor(t/60)+" min");
+    $("ul#jeu").children().remove();
+    for(let i=0;i<data.pointage.jeu.length;i++){
+        $("#jeu").append("<li>"+data.pointage.jeu[i][0]+"-"+data.pointage.jeu[i][1]+"</li>")
+    }
+
+    $("#pari-button").on("click",function(event){
+        var id= $(".container").attr("data-id");
+        var name= $(".container").attr("data-name");
+        var montant= $("#paris").val();
+       if($(".joueur1-paris input").prop("checked")){
+           var j= $(".joueur1").text();
+           window.location="https://127.0.0.1:3500/client-side/paris/"+id+"/"+name+"/"+montant+"/"+j;
+       }
+       else{
+           var j= $(".joueur2").text();
+           window.location="https://127.0.0.1:3500/client-side/paris/"+id+"/"+name+"/"+montant+"/"+j;
+       }
+    });
 }

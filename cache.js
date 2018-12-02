@@ -24,6 +24,29 @@ const saveSubscription = async subscription => {
     return response.json()
 };
 
+
+var CACHE_NAME = 'TennisParis-v1';
+var urlsToCache = [
+    /*'/scripts/details.html',
+    '/scripts/scripts/details.js',
+    '/scripts/scripts/accueil.js',*/
+    '/scripts/connexion.html',
+    /*'/scripts/accueil.html',
+    '/scripts/css/style.css',
+    '/scripts/css/connexion.css'*/
+];
+
+/*self.addEventListener('install', function(event) {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(function(cache) {
+                console.log('Opened cache');
+                return cache.addAll(urlsToCache);
+            })
+    );
+});*/
+
+
 self.addEventListener('activate', async () => {
     // This will be called only once when the service worker is activated.
     console.log('activation');
@@ -42,14 +65,30 @@ self.addEventListener('activate', async () => {
     }
 });
 
-self.addEventListener('fetch', function(event) {
+/*self.addEventListener('fetch', function(event) {
+    console.log('Gestion de l\'évènement de fetch pour', event.request.url);
 
     event.respondWith(
-        fetch(event.request).catch(function() {
-            return caches.match(event.request);
+        caches.match(event.request).then(function(response) {
+            if (response) {
+                console.log('Réponse trouvée en cache:', response);
+
+                return response;
+            }
+            console.log('Pas de réponse trouvée en cache. Sur le point de la récupérer via le réseau...');
+
+            return fetch(event.request).then(function(response) {
+                console.log('La réponse du réseau est:', response);
+
+                return response;
+            }).catch(function(error) {
+                console.error('Récupération échouée:', error);
+
+                throw error;
+            });
         })
     );
-});
+});*/
 
 self.addEventListener('push', function(event) {
     console.log("poussé");
@@ -68,7 +107,7 @@ const showLocalNotification = (title, body, swRegistration) => {
 };
 
 
-self.addEventListener('fetch', function(event) {
+/*self.addEventListener('fetch', function(event) {
     console.log("fetched!");
     event.respondWith(
         caches.match(event.request)
@@ -108,5 +147,5 @@ self.addEventListener('fetch', function(event) {
             })
     );
 });
-
+*/
 

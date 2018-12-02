@@ -2,35 +2,34 @@ $("document").ready(function(){
     console.log("chargé");
 
 
-    fetch('https://127.0.0.1:3500/parties'
-    )
+    fetch('https://127.0.0.1:3500/parties')
         .then(function (response){
             return response.json();
         }).then(function (data){
             affichageMatchs(data);
             console.log(data);
         }).catch((response) => {
-            console.log('Error')
+            console.log('Error '+response)
         });
 
     $("table").on("click","tr",function(e){
         let id= $(this).attr('data-id');
-        window.location="https://127.0.0.1:3500/client-side/details/"+id;
+        window.location="https://127.0.0.1:3500/client-side/details/"+id+"/"+$(".container").attr("data-name");
     });
 
     $("#refresh").on('click',function(){
+        console.log("refresh")
         fetch('https://127.0.0.1:3500/parties')
             .then(function (response){
                 return response.json();
             }).then(function (data){
-            $("tbody").children().eq(0).siblings().remove();
-            affichageMatchs(data);
+                affichageMatchs(data);
 
         }).catch((response) => {
-            console.log('Error')
+            console.log('Error '+response)
         });
     });
-    setTimeout(function () {
+    setInterval(function () {
 
         fetch('https://127.0.0.1:3500/parties')
             .then(function (response) {
@@ -38,22 +37,56 @@ $("document").ready(function(){
             }).then(function (data) {
             $("tbody").children().eq(0).siblings().remove();
             affichageMatchs(data);
+        }).catch((response) => {
+            console.log('Error '+response)
         });
     },60000);
     main();
 });
 
 function affichageMatchs(data){
-    console.log(data);
+    $(".container").children().remove();
+    var name= $(".container").attr("data-name");
     for(var i=0;i<data.length;i++){
-        var ligne=$("<tr data-id="+data[i].id+"></tr>");
+        let match= "<div class=\"contenu col-xs-12\"><a href=\"/client-side/details/"+data[i].id+"/"+name+"\">" +
+        "<div class=\"bordure col-sm-8 col-sm-offset-2\"><p>Match "+data[i].id+
+        "</p><li class=\"col-sm-6 col-xs-6\" class=\"joueur1\">"+data[i].joueur1.prenom+" "+data[i].joueur1.nom+"</li>" +
+        "<li class=\"col-sm-6 col-xs-6\" class=\"joueur2\">"+ data[i].joueur2.prenom+" "+data[i].joueur2.nom +"</li>"+
+        "</ul>\n" +
+        "<h3>Score</h3>\n" +
+        " <ul class=\"list-inline titre\">\n" +
+        "<li class=\"col-sm-6 col-xs-6\">Jeu</li>\n" +
+        "<li class=\"col-sm-6 col-xs-6\">Echange</li>\n" +
+        "</ul>\n" +
+        "<ul class=\"list-inline\">\n" +
+        "<ul class=\"list-inline col-sm-6 col-xs-6\" class=\"jeu\">";
+        for(let j=0;j<data[i].pointage.jeu.length;j++){
+            match= match +"<li>"+data[i].pointage.jeu[j][0]+"-"+data[i].pointage.jeu[j][1]+"</li>";
+        }
+        match= match+
+        "</ul>\n" +
+        "<li class=\"col-sm-6 col-xs-6\" class=\"echange\">"+data[i].pointage.echange[0]+"-"+data[i].pointage.echange[1]+"</li>\n" +
+        "</ul>\n" +
+        "</div>\n" +
+        "</a>\n" +
+        "</div>";
 
-        var contenu= "<td>"+data[i].joueur1.prenom+" "+data[i].joueur1.nom +"</td><td>"+data[i].joueur2.prenom+" "+data[i].joueur2.nom+"</td>"
-            +"<td>echange: "+data[i].pointage.echange[0]+" - "+ data[i].pointage.echange[1]+"jeu: "+data[i].pointage.jeu[0]+" - "+data[i].pointage.jeu[1]+"manches: "+data[i].pointage.manches[0]+" - "+data[i].pointage.manches[1]+"</td>";
-        //lien.append(contenu);
-        ligne.append(contenu);
-        $("#tableOfAllMatchs tbody").append(ligne);
+        $(".container").append(match);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 const check = () => {

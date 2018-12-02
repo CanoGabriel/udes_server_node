@@ -3,23 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>TennisParis</title>
-    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://127.0.0.1:3500/src/partie-client/css/style.css">
 </head>
-<header>
-    <h1>Bienvenue sur ParisTennis</h1>
-</header>
+
 <body>
-    <div class="list-matchs">
-        <table id="tableOfAllMatchs">
-            <tr>
-                <th>joueur1</th>
-                <th>joueur2</th>
-                <th>score</th>
-            </tr>
-        </table>
-    </div>
-    <button id="refresh">Rafraîchir</button>
 
     <nav class="navbar navbar-inverse" >
       <div class="container-fluid">
@@ -30,44 +18,21 @@
           <li><a href="accueil.html">Accueil</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a id="refresh-link"><span class="glyphicon glyphicon-repeat"></span> Rafraîchir </a></li>
+          <li><a id="refresh"><span class="glyphicon glyphicon-repeat"></span> Rafraîchir </a></li>
+          <li><a id="deco" href="/deconnexion/{{name}}"><span class=""></span> Déconnexion </a></li>
         </ul>
       </div>
     </nav>
 
     <form>
-      <div class = "container">
-        <div class="contenu col-xs-12">
-          <a href="details.html">
-            <div class="bordure col-sm-8 col-sm-offset-2">
-              <p>Match 1</p>
-              <ul class="liste">
-                <ul class="list-inline">
-                  <li class="col-sm-6 col-xs-6" id="joueur1">Prenom1 Nom1</li>
-                  <li class="col-sm-6 col-xs-6" id="joueur2">Prenom2 Nom2</li>
-                </ul>
-                <h3>Score</h3>
-                <ul class="list-inline titre">
-                  <li class="col-sm-6 col-xs-6">Jeu</li>
-                  <li class="col-sm-6 col-xs-6">Echange</li>
-                </ul>
-                <ul class="list-inline">
-                  <ul class="list-inline col-sm-6 col-xs-6" id="jeu">
-                    <li>6-4</li>
-                    <li>4-5</li>
-                  </ul>
-                  <li class="col-sm-6 col-xs-6" id="echange">0-30</li>
-                </ul>
-              </ul>
-            </div>
-          </a>
-        </div>
+      <div class ="container" data-name={{name}}>
+
       </div>
     </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"> </script>
-    <script src="https://127.0.0.1:3500/scripts/scripts/jquery-3.3.1.min.js"></script>
+    <!--<script src="https://127.0.0.1:3500/scripts/scripts/jquery-3.3.1.min.js"></script>-->
     <script src="https://127.0.0.1:3500/scripts/scripts/accueil.js"></script>
 </body>
 
