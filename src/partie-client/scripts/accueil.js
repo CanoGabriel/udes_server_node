@@ -74,19 +74,6 @@ function affichageMatchs(data){
         $(".container").append(match);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 const check = () => {

@@ -27,6 +27,7 @@ const notifications= function(url, options){
         var dbo= db.db("mydb");
         dbo.collection("subscription").findOne({}, function(err, result) {
             if (err) throw err;
+            console.log
             const sub=result;
             const message = options;
             sendNotification(sub, message);

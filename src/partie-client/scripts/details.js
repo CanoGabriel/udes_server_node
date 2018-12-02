@@ -46,7 +46,9 @@ function affichageMatchs(data) {
     $("#rang1").text(data.joueur1.rang);
     $("#rang2").text(data.joueur2.rang);
     $("#echange").text(data.pointage.echange[0]+" - "+data.pointage.echange[1]);
-    $("#constestation").text(data.constestation[0]+" - "+data.constestation[1]);
+    var c0= data.constestation[0]- data.nombre_tentative_contestation[0];
+    var c1= data.constestation[1]- data.nombre_tentative_contestation[1];
+    $("#contestation").text(c0+" - "+c1);
     var t= data.temps_partie;
     var s = Math.floor(t / 1000) % 60;
     var m = Math.floor(t / 60000) % 60;
