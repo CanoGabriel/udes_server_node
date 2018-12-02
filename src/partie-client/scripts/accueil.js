@@ -50,7 +50,7 @@ function affichageMatchs(data){
     for(var i=0;i<data.length;i++){
         let match= "<div class=\"contenu col-xs-12\"><a href=\"/client-side/details/"+data[i].id+"/"+name+"\">" +
         "<div class=\"bordure col-sm-8 col-sm-offset-2\"><p>Match "+data[i].id+
-        "</p><li class=\"col-sm-6 col-xs-6\" class=\"joueur1\">"+data[i].joueur1.prenom+" "+data[i].joueur1.nom+"</li>" +
+        "</p><li>heure du match: "+data[i].heure_debut+"</li><li class=\"col-sm-6 col-xs-6\" class=\"joueur1\">"+data[i].joueur1.prenom+" "+data[i].joueur1.nom+"</li>" +
         "<li class=\"col-sm-6 col-xs-6\" class=\"joueur2\">"+ data[i].joueur2.prenom+" "+data[i].joueur2.nom +"</li>"+
         "</ul>\n" +
         "<h3>Score</h3>\n" +
@@ -92,10 +92,6 @@ const registerServiceWorker = async () => {
 
 const requestNotificationPermission = async () => {
     const permission = await window.Notification.requestPermission();
-    // value of permission can be 'granted', 'default', 'denied'
-    // granted: user has accepted the request
-    // default: user has dismissed the notification permission popup by clicking on x
-    // denied: user has denied the request.
     if(permission !== 'granted'){
         throw new Error('Permission not granted for Notification');
     }
@@ -116,4 +112,5 @@ const main = async () => {
     const permission =  await requestNotificationPermission();
     //showLocalNotification('This is title', 'this is the message', swRegistration);
 }
+
 

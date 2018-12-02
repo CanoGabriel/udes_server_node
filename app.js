@@ -16,15 +16,6 @@ const mongo= require('mongodb');
 const mongoClient= mongo.MongoClient;
 var url="mongodb://localhost:27017/mydb";
 
-/*mongoClient.connect(url, { useNewUrlParser: true },function(err, db) {
-    if (err) throw err;
-    var dbo = db.db("mydb");
-    dbo.collection("subscription").drop(function(err, delOK) {
-        if (err) throw err;
-        if (delOK) console.log("Collection deleted");
-        db.close();
-    });
-});*/
 
 mongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
     if (err) throw err;
@@ -34,11 +25,7 @@ mongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
         console.log("Collection created!");
         //db.close();
     });
-    /*dbo.collection("subscription").deleteMany({},function(err, obj) {
-        if (err) throw err;
-        console.log(obj.result.n + " document(s) deleted");
-        db.close();
-    })*/
+
 });
 
 
@@ -66,11 +53,6 @@ app.set('views', __dirname + '/../partie-client');
 app.engine('html', engines.mustache);
 app.set('view engine', 'html');
 
-/*
-app.get('/',function(req,res){
-    res.render(__dirname+'/src/partie-client/connexion.html');
-})
-*/
 const generateur = require('./src/generateur');
 generateur.demarrer();
 

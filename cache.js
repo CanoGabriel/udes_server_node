@@ -27,13 +27,10 @@ const saveSubscription = async subscription => {
 
 var CACHE_NAME = 'TennisParis-v1';
 var urlsToCache = [
-    /*'/scripts/details.html',
-    '/scripts/scripts/details.js',
-    '/scripts/scripts/accueil.js',*/
-    '/scripts/connexion.html',
-    /*'/scripts/accueil.html',
-    '/scripts/css/style.css',
-    '/scripts/css/connexion.css'*/
+    'https://127.0.0.1:3500/scripts/connexion.html',
+    'https://127.0.0.1:3500/scripts/accueil.html',
+    'https://127.0.0.1:3500/scripts/details.html',
+
 ];
 
 /*self.addEventListener('install', function(event) {
@@ -42,6 +39,9 @@ var urlsToCache = [
             .then(function(cache) {
                 console.log('Opened cache');
                 return cache.addAll(urlsToCache);
+            })
+            .catch(function(err){
+                if(err) throw err;
             })
     );
 });*/
@@ -66,29 +66,22 @@ self.addEventListener('activate', async () => {
 });
 
 /*self.addEventListener('fetch', function(event) {
-    console.log('Gestion de l\'évènement de fetch pour', event.request.url);
+    event.respondWith(fetch(event.request));
+});*/
 
+/*self.addEventListener('fetch', function(event) {
     event.respondWith(
-        caches.match(event.request).then(function(response) {
-            if (response) {
-                console.log('Réponse trouvée en cache:', response);
-
-                return response;
-            }
-            console.log('Pas de réponse trouvée en cache. Sur le point de la récupérer via le réseau...');
-
-            return fetch(event.request).then(function(response) {
-                console.log('La réponse du réseau est:', response);
-
-                return response;
-            }).catch(function(error) {
-                console.error('Récupération échouée:', error);
-
-                throw error;
+        caches.open('mysite-dynamic').then(function(cache) {
+            return cache.match(event.request).then(function (response) {
+                return response || fetch(event.request).then(function(response) {
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
             });
         })
-    );
+    )
 });*/
+
 
 self.addEventListener('push', function(event) {
     console.log("poussé");
